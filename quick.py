@@ -1,8 +1,4 @@
-"""
-quick.py
-
-Template for most basic Python scripts
-"""
+# TODO: A script created with quick-python
 
 import argparse
 from configparser import ConfigParser
