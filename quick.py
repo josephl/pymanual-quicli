@@ -1,19 +1,19 @@
 # TODO: A script created with quick-python
 
 import argparse
-from configparser import ConfigParser
+from configparser import ConfigParser, SectionProxy
 import logging
 import typing
 
 
 DEFAULT_CFG_PATH = "config.ini"
-DEFAULT_CFG_SECTION = "DEFAULT"
+DEFAULT_CFG_SECTION = "CHANGEME"  # TODO: Edit this to a project section name
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args() -> typing.Tuple[argparse.Namespace, SectionProxy]:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-c", "--config", nargs="?", default=DEFAULT_CFG_PATH, help="Config path",
+        "-c", "--config", default=DEFAULT_CFG_PATH, help="Config path",
     )
     parser.add_argument(
         "-s", "--config-section", default=DEFAULT_CFG_SECTION, help="Config section"
@@ -21,10 +21,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-v", "--verbose", action="count", default=0, help="Verbose logging"
     )
-
     args = parser.parse_args()
-    set_logging(vcount=args.verbose)
-    return args
+    cfg_parser = ConfigParser()
+    cfg_parser.read(args.config)
+    config = cfg_parser[args.config_section]
+    logging_args = cfg_parser["logging"]
+    set_logging(vcount=args.verbose, **logging_args)
+    return args, config
 
 
 def set_logging(vcount: typing.Optional[int] = None, **log_args: dict) -> None:
@@ -39,7 +42,4 @@ def set_logging(vcount: typing.Optional[int] = None, **log_args: dict) -> None:
 
 
 if __name__ == "__main__":
-    args = parse_args()
-    cfg_parser = ConfigParser()
-    cfg_parser.read(args.config)
-    config = cfg_parser[args.config_section]
+    args, config = parse_args()
