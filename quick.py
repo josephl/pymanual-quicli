@@ -12,7 +12,7 @@ DEFAULT_CFG_PATH = "config.ini"
 def parse_args() -> typing.Tuple[argparse.Namespace, ConfigParser]:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-c", "--config", default=DEFAULT_CFG_PATH, help="Config path",
+        "-c", "--config", action="append", help="Config path(s)",
     )
     parser.add_argument(
         "-v", "--verbose", action="count", default=0, help="Verbose logging"
