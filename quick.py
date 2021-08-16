@@ -20,7 +20,7 @@ def parse_args() -> typing.Tuple[argparse.Namespace, ConfigParser]:
     args = parser.parse_args()
     config = ConfigParser()
     config.read(args.config)
-    logging_args = config["logging"]
+    logging_args = config["logging"] if "logging" in config else {}
     set_logging(vcount=args.verbose, **logging_args)
     return args, config
 
