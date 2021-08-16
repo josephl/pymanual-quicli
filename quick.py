@@ -6,9 +6,6 @@ import logging
 import typing
 
 
-DEFAULT_CFG_PATH = "config.ini"
-
-
 def parse_args() -> typing.Tuple[argparse.Namespace, ConfigParser]:
     parser = argparse.ArgumentParser()
     parser.add_argument(
