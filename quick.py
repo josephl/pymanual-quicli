@@ -16,13 +16,16 @@ def parse_args() -> typing.Tuple[argparse.Namespace, ConfigParser]:
     )
     args = parser.parse_args()
     config = ConfigParser()
-    config.read(args.config)
+    if args.config:
+        config.read(args.config)
     logging_args = config["logging"] if "logging" in config else {}
     set_logging(vcount=args.verbose, **logging_args)
     return args, config
 
 
-def set_logging(vcount: typing.Optional[int] = None, **log_args: dict) -> None:
+def set_logging(
+    vcount: typing.Optional[int] = 0, **log_args: typing.Dict[str, typing.Any]
+) -> None:
     """
     Apply logging options to `logging.basicConfig`
     """
@@ -33,5 +36,9 @@ def set_logging(vcount: typing.Optional[int] = None, **log_args: dict) -> None:
     logging.basicConfig(**log_args)
 
 
-if __name__ == "__main__":
+def main():
     args, config = parse_args()
+
+
+if __name__ == "__main__":
+    main()
