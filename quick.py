@@ -19,7 +19,9 @@ def parse_args() -> typing.Tuple[argparse.Namespace, ConfigParser]:
     config = ConfigParser()
     if args.config:
         config.read(args.config)
-    logging_args = config["logging"] if "logging" in config else {}
+    logging_args = config["logging"] if "logging" in config else {
+        "format": "%(asctime)s %(levelname)s %(filename)s:%(funcName)s:%(lineno)d - %(message)s",
+    }
     set_logging(vcount=args.verbose, **logging_args)
     return args, config
 
