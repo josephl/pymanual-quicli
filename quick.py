@@ -3,6 +3,7 @@
 import argparse
 from configparser import ConfigParser
 import logging
+from time import time
 import typing
 
 
@@ -41,4 +42,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    start = time()
+    try:
+        main()
+    except Exception:
+        raise
+    finally:
+        duration = time() - start
+        logging.info(f"Completed running '{__file__}' in {duration:0.03f} seconds")
