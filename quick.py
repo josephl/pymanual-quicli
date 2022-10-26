@@ -4,10 +4,10 @@ import argparse
 from configparser import ConfigParser
 import logging
 from time import time
-import typing
+from typing import Any, Dict, Optional, Tuple
 
 
-def parse_args() -> typing.Tuple[argparse.Namespace, ConfigParser]:
+def parse_args() -> Tuple[argparse.Namespace, ConfigParser]:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-c", "--config", action="append", help="Config path(s)",
@@ -27,7 +27,7 @@ def parse_args() -> typing.Tuple[argparse.Namespace, ConfigParser]:
 
 
 def set_logging(
-    vcount: typing.Optional[int] = 0, **log_args: typing.Dict[str, typing.Any]
+    vcount: Optional[int] = 0, **log_args: Dict[str, Any]
 ) -> None:
     """
     Apply logging options to `logging.basicConfig`
